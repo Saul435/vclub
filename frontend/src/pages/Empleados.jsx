@@ -40,6 +40,17 @@ function Empleados() {
 
   const guardar = async () => {
 
+  if (
+    !form.nombre.trim() ||
+    !form.cedula.trim() ||
+    !form.tanda_labor ||
+    !form.porciento_comision ||
+    !form.fecha_ingreso
+  ) {
+    toast.error("Todos los campos son obligatorios");
+    return;
+  }
+
   try {
 
     if (editando) {

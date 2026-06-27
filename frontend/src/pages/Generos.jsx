@@ -22,31 +22,36 @@ function Generos() {
 
   const guardar = async () => {
 
-    if (editando) {
+  if (!descripcion.trim()) {
+    toast.error("La descripción es obligatoria");
+    return;
+  }
 
-      await api.put(
-        `/generos/${editando.id}`,
-        {
-          descripcion
-        }
-      );
+  if (editando) {
 
-    } else {
+    await api.put(
+      `/generos/${editando.id}`,
+      {
+        descripcion
+      }
+    );
 
-      await api.post(
-        "/generos",
-        {
-          descripcion
-        }
-      );
+  } else {
 
-    }
+    await api.post(
+      "/generos",
+      {
+        descripcion
+      }
+    );
 
-    setDescripcion("");
-    setEditando(null);
+  }
 
-    cargarDatos();
-  };
+  setDescripcion("");
+  setEditando(null);
+
+  cargarDatos();
+};
 
   const editar = (genero) => {
 

@@ -83,8 +83,19 @@ function DescripcionArticulos() {
 
   };
 
-  const guardar =
-  async () => {
+  const guardar = async () => {
+
+    if (
+      !form.titulo.trim() ||
+      !form.tipo_articulo_id ||
+      !form.idioma_id ||
+      !form.renta_dia ||
+      !form.dias_renta ||
+      !form.monto_entrega_tardia
+    ) {
+      toast.error("Todos los campos son obligatorios");
+      return;
+    }
 
     if (editando) {
 
@@ -93,6 +104,8 @@ function DescripcionArticulos() {
         form
       );
 
+      toast.success("Descripción actualizada");
+
     } else {
 
       await api.post(
@@ -100,24 +113,19 @@ function DescripcionArticulos() {
         form
       );
 
+      toast.success("Descripción guardada");
+
     }
 
     setEditando(null);
 
     setForm({
-
       titulo: "",
-
       tipo_articulo_id: "",
-
       idioma_id: "",
-
       renta_dia: "",
-
       dias_renta: "",
-
       monto_entrega_tardia: ""
-
     });
 
     cargarDatos();

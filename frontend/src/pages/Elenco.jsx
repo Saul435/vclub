@@ -22,23 +22,32 @@ function Elencos() {
 
   const guardar = async () => {
 
-    if (editando) {
+  if (!nombre.trim()) {
+    toast.error("El nombre es obligatorio");
+    return;
+  }
 
-      await api.put(`/elencos/${editando.id}`,
-        {nombre}
-      );
+  if (editando) {
 
+    await api.put(
+      `/elencos/${editando.id}`,
+      { nombre }
+    );
 
-    }
-    else {
-      await api.post("/elencos", {nombre});
-    }
+  } else {
 
-    setNombre("");
-    setEditando(null);
+    await api.post(
+      "/elencos",
+      { nombre }
+    );
 
-    cargarDatos ();
-  };
+  }
+
+  setNombre("");
+  setEditando(null);
+
+  cargarDatos();
+};
 
   const editar = (elenco) => {
 

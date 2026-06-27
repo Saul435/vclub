@@ -47,6 +47,11 @@ const cambiarEstado = async (id) => {
 
   const guardar = async () => {
 
+  if (!descripcion.trim()) {
+    toast.error("La descripción es obligatoria");
+    return;
+  }
+
   if (editando) {
 
     await api.put(

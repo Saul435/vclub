@@ -36,7 +36,7 @@ def create_elenco():
 @elenco_bp.route("/elencos/<int:id>", methods=["PUT"])
 def update_elenco(id):
 
-    elenco = elenco.query.get_or_404(id)
+    elenco = Elenco.query.get_or_404(id)
 
     data = request.json
 
@@ -49,7 +49,7 @@ def update_elenco(id):
 @elenco_bp.route("/elencos/<int:id>/estado", methods=["PUT"])
 def cambiar_estado_elenco(id):
 
-    elenco = elenco.query.get_or_404(id)
+    elenco = Elenco.query.get_or_404(id)
 
     elenco.estado = not elenco.estado
 

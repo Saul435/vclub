@@ -36,7 +36,7 @@ def create_idioma():
 @idioma_bp.route("/idiomas/<int:id>", methods=["PUT"])
 def update_idioma(id):
 
-    idioma = idioma.query.get_or_404(id)
+    idioma = Idioma.query.get_or_404(id)
 
     data = request.json
 

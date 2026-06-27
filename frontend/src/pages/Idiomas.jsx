@@ -23,23 +23,32 @@ function Idiomas() {
 
   const guardar = async () => {
 
-    if (editando) {
+  if (!descripcion.trim()) {
+    toast.error("La descripción es obligatoria");
+    return;
+  }
 
-      await api.put(`/idiomas/${editando.id}`,
-        {descripcion}
-      );
+  if (editando) {
 
+    await api.put(
+      `/idiomas/${editando.id}`,
+      { descripcion }
+    );
 
-    }
-    else {
-      await api.post("/idiomas", {descripcion});
-    }
+  } else {
 
-    setDescripcion("");
-    setEditando(null);
+    await api.post(
+      "/idiomas",
+      { descripcion }
+    );
 
-    cargarDatos ();
-  };
+  }
+
+  setDescripcion("");
+  setEditando(null);
+
+  cargarDatos();
+};
 
   const editar = (idioma) => {
 

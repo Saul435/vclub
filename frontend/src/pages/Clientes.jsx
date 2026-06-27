@@ -42,6 +42,17 @@ function Clientes() {
 
   const guardar = async () => {
 
+  if (
+    !form.nombre.trim() ||
+    !form.cedula.trim() ||
+    !form.tarjeta_credito.trim() ||
+    !form.limite_credito ||
+    !form.tipo_persona
+  ) {
+    toast.error("Todos los campos son obligatorios");
+    return;
+  }
+
   try {
 
     if (editando) {
