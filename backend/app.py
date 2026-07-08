@@ -12,6 +12,8 @@ from models.idioma import Idioma
 from routes.idioma_routes import idioma_bp
 from models.elenco import Elenco
 from routes.elenco_routes import elenco_bp
+from models.usuario import Usuario
+from routes.usuario_routes import usuario_bp
 from models.descripcion_articulo import ( DescripcionArticulo )
 from routes.descripcion_articulo_routes import ( descripcion_articulo_bp )
 
@@ -32,6 +34,7 @@ app.register_blueprint(empleado_bp)
 app.register_blueprint(descripcion_articulo_bp)
 app.register_blueprint(idioma_bp)
 app.register_blueprint(elenco_bp)
+app.register_blueprint(usuario_bp)
 
 
 with app.app_context():
