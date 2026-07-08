@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 import { Film, Users, Languages, UserCog } from "lucide-react";
 
+import { useState } from "react";
+
 import TiposArticulo from "./pages/TiposArticulo";
 import Generos from "./pages/Generos";
 import Idiomas from "./pages/Idiomas";
@@ -9,8 +11,27 @@ import Elencos from "./pages/Elenco";
 import Clientes from "./pages/Clientes";
 import Empleados from "./pages/Empleados";
 import DescripcionArticulos from "./pages/DescripcionArticulos";
+import Login from "./pages/Login";
+
 
 function App() {
+
+  const [usuario, setUsuario] = useState(
+
+    JSON.parse(
+
+      localStorage.getItem("usuario")
+
+    )
+
+  );
+  const rol = usuario?.rol;
+
+
+  if (!usuario) {
+    return <Login setUsuario={setUsuario} />;
+  }
+
   return (
     <BrowserRouter>
 
@@ -22,42 +43,71 @@ function App() {
             VIDEO CLUB
           </h1>
 
+          <p className="text-sm text-zinc-400">
+            {usuario.correo}
+          </p>
+
+          <p className="text-green-400 mb-6">
+            {usuario.rol}
+          </p>
+
           <nav className="flex flex-col gap-3">
 
             <Link className="menu-item" to="/tipos-articulo">
-              <Film size={18}/>
+              <Film size={18} />
               Tipos Artículo
             </Link>
 
+            {rol === "Administrador" && (
             <Link className="menu-item" to="/generos">
-              <Film size={18}/>
+              <Film size={18} />
               Géneros
             </Link>
+            )}
 
-            <Link className="menu-item" to="/idiomas">
-              <Languages size={18}/>
-              Idiomas
-            </Link>
+            {rol === "Administrador" && (
+              <Link className="menu-item" to="/idiomas">
+                <Languages size={18} />
+                Idiomas
+              </Link>
+
+            )}
 
             <Link className="menu-item" to="/elencos">
-              <Users size={18}/>
+              <Users size={18} />
               Elencos
             </Link>
 
-            <Link className="menu-item" to="/clientes">
-              <Users size={18}/>
-              Clientes
-            </Link>
+            {rol === "Administrador" && (
+              <Link className="menu-item" to="/clientes">
+                <Users size={18} />
+                Clientes
+              </Link>
 
-            <Link className="menu-item" to="/empleados">
-              <UserCog size={18}/>
-              Empleados
-            </Link>
+            )}
+
+            {rol === "Administrador" && (
+              <Link className="menu-item" to="/empleados">
+                <UserCog size={18} />
+                Empleados
+              </Link>
+
+            )}
 
             <Link className="menu-item" to="/descripciones-articulo">
-              <Film size={18}/>
+              <Film size={18} />
               Artículos
             </Link>
+
+            <button
+              className="menu-item"
+              onClick={() => {
+                localStorage.removeItem("usuario");
+                setUsuario(null);
+              }}
+            >
+              Cerrar sesión
+            </button>
 
           </nav>
 
@@ -75,6 +125,7 @@ function App() {
             <Route path="/clientes" element={<Clientes />} />
             <Route path="/empleados" element={<Empleados />} />
             <Route path="/descripciones-articulo" element={<DescripcionArticulos />} />
+            <Route path="/login" element={<Login />} />
 
           </Routes>
 
