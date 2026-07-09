@@ -27,11 +27,18 @@ class Usuario(db.Model):
         default=True
     )
 
+    empleado_id = db.Column(
+    db.Integer,
+    db.ForeignKey("empleados.id"),
+    unique=True
+    )
+
     def to_dict(self):
 
         return {
 
             "id": self.id,
+            "empleado_id": self.empleado_id,
             "correo": self.correo,
             "rol": self.rol,
             "estado": self.estado
