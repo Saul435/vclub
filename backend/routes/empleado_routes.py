@@ -125,7 +125,7 @@ def create_empleado():
     )
 
     db.session.add(nuevo)
-    db.session.commit()
+    db.session.flush()
 
 # CREAR USUARIO AUTOMÁTICAMENTE
    
@@ -145,14 +145,17 @@ def create_empleado():
     )
 
     nuevo_usuario = Usuario(
-        correo=correo,
-        password=password,
-        rol="Empleado",
-        estado=True
+    correo=correo,
+    password=password,
+    rol="Empleado",
+    estado=True,
+    empleado_id=nuevo.id
     )
 
     db.session.add(nuevo_usuario)
     db.session.commit()
+
+    
 
     return jsonify({
         "empleado": nuevo.to_dict(),
@@ -205,11 +208,18 @@ def delete_empleado(id):
 
     empleado = Empleado.query.get_or_404(id)
 
+    usuario = Usuario.query.filter_by(
+        empleado_id=id
+    ).first()
+
+    if usuario:
+        db.session.delete(usuario)
+
     db.session.delete(empleado)
 
     db.session.commit()
 
     return jsonify({
         "message":
-        "Empleado eliminado correctamente"
+        "Empleado y usuario eliminados correctamente"
     })
