@@ -12,7 +12,7 @@ import Clientes from "./pages/Clientes";
 import Empleados from "./pages/Empleados";
 import DescripcionArticulos from "./pages/DescripcionArticulos";
 import Login from "./pages/Login";
-
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 
@@ -59,10 +59,10 @@ function App() {
             </Link>
 
             {rol === "Administrador" && (
-            <Link className="menu-item" to="/generos">
-              <Film size={18} />
-              Géneros
-            </Link>
+              <Link className="menu-item" to="/generos">
+                <Film size={18} />
+                Géneros
+              </Link>
             )}
 
             {rol === "Administrador" && (
@@ -78,13 +78,12 @@ function App() {
               Elencos
             </Link>
 
-            {rol === "Administrador" && (
-              <Link className="menu-item" to="/clientes">
+            <Link className="menu-item" to="/clientes">
                 <Users size={18} />
                 Clientes
-              </Link>
+            </Link>
 
-            )}
+            
 
             {rol === "Administrador" && (
               <Link className="menu-item" to="/empleados">
@@ -119,11 +118,41 @@ function App() {
 
             <Route path="/" element={<TiposArticulo />} />
             <Route path="/tipos-articulo" element={<TiposArticulo />} />
-            <Route path="/generos" element={<Generos />} />
-            <Route path="/idiomas" element={<Idiomas />} />
+            <Route path="/generos" element={
+              <ProtectedRoute
+                usuario={usuario}
+                roles={["Administrador"]}
+              > <Generos />
+              </ProtectedRoute>} />
+            <Route path="/idiomas" element={
+              <ProtectedRoute
+                usuario={usuario}
+                roles={["Administrador"]}
+              > <Idiomas />
+              </ProtectedRoute>} />
             <Route path="/elencos" element={<Elencos />} />
-            <Route path="/clientes" element={<Clientes />} />
-            <Route path="/empleados" element={<Empleados />} />
+            <Route
+              path="/clientes"
+              element={
+                <ProtectedRoute
+                  usuario={usuario}
+                  roles={["Administrador", "Empleado"]}
+                >
+                  <Clientes />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/empleados"
+              element={
+                <ProtectedRoute
+                  usuario={usuario}
+                  roles={["Administrador"]}
+                >
+                  <Empleados />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/descripciones-articulo" element={<DescripcionArticulos />} />
             <Route path="/login" element={<Login />} />
 
