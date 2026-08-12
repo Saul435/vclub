@@ -1,13 +1,11 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: {
-        "Content-Type": "application/json"
-    }
+baseURL: "http://localhost:5000",
+headers: {
+"Content-Type": "application/json"
+}
 });
-
-
 
 api.interceptors.request.use((config) => {
 
@@ -22,8 +20,6 @@ api.interceptors.request.use((config) => {
     return config;
 
 });
-
-
 
 api.interceptors.response.use(
 
@@ -117,7 +113,6 @@ api.interceptors.response.use(
     }
 
 );
-
 
 function cerrarSesion() {
 

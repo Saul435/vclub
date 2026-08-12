@@ -282,6 +282,24 @@ def cambiar_estado(id):
         tipo.to_dict()
     )
 
+@tipo_articulo_bp.route(
+    "/tipos-articulo/activos",
+    methods=["GET"]
+)
+@jwt_required()
+def get_tipos_activos():
+
+    tipos = TipoArticulo.query.filter_by(
+        estado=True
+    ).all()
+
+    return jsonify([
+
+        t.to_dict()
+
+        for t in tipos
+
+    ])
 
 
 

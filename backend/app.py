@@ -22,6 +22,7 @@ from models.actividad import Actividad
 from models.verificacion_correo import VerificacionCorreo
 from models.usuario import Usuario
 from models.rol import Rol
+from models.reserva import Reserva
 
 from routes.tipo_articulo_routes import tipo_articulo_bp
 from routes.genero_routes import genero_bp
@@ -36,6 +37,7 @@ from routes.admin_routes import admin_bp
 from routes.dashboard_routes import dashboard_bp
 from routes.busqueda_routes import busqueda_bp
 from routes.google_auth_routes import google_bp
+from routes.reserva_routes import reserva_bp
 
 from utilidades.seed_roles import crear_roles
 from utilidades.seed_admin import crear_admin
@@ -64,6 +66,7 @@ app.register_blueprint(admin_bp)
 app.register_blueprint(dashboard_bp)
 app.register_blueprint(busqueda_bp)
 app.register_blueprint(google_bp)
+app.register_blueprint(reserva_bp)
 
 bcrypt = Bcrypt(app)
 

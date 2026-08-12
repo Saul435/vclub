@@ -49,6 +49,12 @@ class DescripcionArticulo(db.Model):
         default=True
     )
 
+    unidades = db.Column(
+        db.Integer,
+        nullable=False,
+        default=1
+    )
+
     tipo_articulo = db.relationship(
         "TipoArticulo"
     )
@@ -77,5 +83,7 @@ class DescripcionArticulo(db.Model):
             "monto_entrega_tardia":
                 self.monto_entrega_tardia,
             "estado":
-                self.estado
+                self.estado,
+            "unidades":
+                self.unidades,
         }

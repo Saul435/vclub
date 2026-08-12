@@ -16,7 +16,9 @@ import {
 
     Shield,
 
-    LogOut
+    LogOut,
+
+    CalendarCheck
 
 } from "lucide-react";
 
@@ -153,6 +155,13 @@ function Sidebar() {
                                 icon={Users}
                             >
                                 Clientes
+                            </NavItem>
+
+                            <NavItem
+                                to="/reservas"
+                                icon={CalendarCheck}
+                            >
+                                Reservas
                             </NavItem>
 
                             <NavItem

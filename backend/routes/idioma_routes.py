@@ -34,7 +34,24 @@ def get_idiomas():
 
     ])
 
+@idioma_bp.route(
+    "/idiomas/activos",
+    methods=["GET"]
+)
+@jwt_required()
+def get_idiomas_activos():
 
+    idiomas = Idioma.query.filter_by(
+        estado=True
+    ).all()
+
+    return jsonify([
+
+        i.to_dict()
+
+        for i in idiomas
+
+    ])
 
 @idioma_bp.route(
     "/idiomas",

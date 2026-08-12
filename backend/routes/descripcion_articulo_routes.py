@@ -8,6 +8,8 @@ from models.descripcion_articulo import (
     DescripcionArticulo
 )
 
+from models.tipo_articulo import TipoArticulo
+
 descripcion_articulo_bp = Blueprint(
     "descripcion_articulo",
     __name__
@@ -34,24 +36,65 @@ def get_descripciones():
 )
 def create_descripcion():
 
-    data = request.json
+    data = request.json or {}
+
+    unidades = data.get("unidades")
+
+    if not unidades or int(unidades) <= 0:
+
+        return jsonify({
+            "error":
+            "Las unidades deben ser mayores a cero."
+        }), 400
+
+    tipo_articulo_id = data.get(
+        "tipo_articulo_id"
+    )
+
+    tipo = TipoArticulo.query.get(
+        tipo_articulo_id
+    )
+
+    if not tipo:
+
+        return jsonify({
+            "error":
+            "El tipo de artículo no existe."
+        }), 400
+
+    if not tipo.estado:
+
+        return jsonify({
+            "error":
+            "El tipo de artículo está inactivo."
+        }), 400
 
     nuevo = DescripcionArticulo(
+
         titulo=data["titulo"],
+
         tipo_articulo_id=
-            data["tipo_articulo_id"],
+            tipo_articulo_id,
+
         idioma_id=
             data["idioma_id"],
+
         renta_dia=
             data["renta_dia"],
+
         dias_renta=
             data["dias_renta"],
+
         monto_entrega_tardia=
             data["monto_entrega_tardia"],
+
+        unidades=int(unidades),
+
         estado=True
     )
 
     db.session.add(nuevo)
+
     db.session.commit()
 
     return jsonify(
@@ -70,19 +113,62 @@ def update_descripcion(id):
         .get_or_404(id)
     )
 
-    data = request.json
+    data = request.json or {}
+
+    unidades = data.get("unidades")
+
+    if not unidades or int(unidades) <= 0:
+
+        return jsonify({
+            "error":
+            "Las unidades deben ser mayores a cero."
+        }), 400
+
+    tipo_articulo_id = data.get(
+        "tipo_articulo_id"
+    )
+
+    tipo = TipoArticulo.query.get(
+        tipo_articulo_id
+    )
+
+    if not tipo:
+
+        return jsonify({
+            "error":
+            "El tipo de artículo no existe."
+        }), 400
+
+    if not tipo.estado:
+
+        return jsonify({
+            "error":
+            "El tipo de artículo está inactivo."
+        }), 400
 
     descripcion.titulo = data["titulo"]
 
-    descripcion.tipo_articulo_id = data["tipo_articulo_id"]
+    descripcion.tipo_articulo_id = (
+        tipo_articulo_id
+    )
 
-    descripcion.idioma_id = data["idioma_id"]
+    descripcion.idioma_id = (
+        data["idioma_id"]
+    )
 
-    descripcion.renta_dia = data["renta_dia"]
+    descripcion.renta_dia = (
+        data["renta_dia"]
+    )
 
-    descripcion.dias_renta = data["dias_renta"]
+    descripcion.dias_renta = (
+        data["dias_renta"]
+    )
 
-    descripcion.monto_entrega_tardia = data["monto_entrega_tardia"]
+    descripcion.monto_entrega_tardia = (
+        data["monto_entrega_tardia"]
+    )
+
+    descripcion.unidades = int(unidades)
 
     db.session.commit()
 

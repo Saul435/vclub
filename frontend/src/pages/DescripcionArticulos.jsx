@@ -35,7 +35,9 @@ function DescripcionArticulos() {
 
       dias_renta: "",
 
-      monto_entrega_tardia: ""
+      monto_entrega_tardia: "",
+
+      unidades: ""
 
     });
 
@@ -49,12 +51,12 @@ function DescripcionArticulos() {
 
     const tiposRes =
       await api.get(
-        "/tipos-articulo"
+        "/tipos-articulo/activos"
       );
 
     const idiomasRes =
       await api.get(
-        "/idiomas"
+        "/idiomas/activos"
       );
 
     setRegistros(
@@ -95,7 +97,10 @@ function DescripcionArticulos() {
       !form.idioma_id ||
       !form.renta_dia ||
       !form.dias_renta ||
-      !form.monto_entrega_tardia
+      !form.monto_entrega_tardia||
+      !form.unidades ||
+      Number(form.unidades) <= 0
+      
     ) {
       toast.error("Todos los campos son obligatorios");
       return;
@@ -129,7 +134,8 @@ function DescripcionArticulos() {
       idioma_id: "",
       renta_dia: "",
       dias_renta: "",
-      monto_entrega_tardia: ""
+      monto_entrega_tardia: "",
+      unidades: ""
     });
 
     cargarDatos();
@@ -158,7 +164,10 @@ function DescripcionArticulos() {
         registro.dias_renta,
 
       monto_entrega_tardia:
-        registro.monto_entrega_tardia
+        registro.monto_entrega_tardia,
+
+      unidades:
+        registro.unidades
 
     });
   };
@@ -311,6 +320,15 @@ function DescripcionArticulos() {
           className="netflix-input"
         />
 
+        <input
+        type="number"
+        name="unidades"
+        placeholder="Cantidad de Unidades"
+        min="1"
+        value={form.unidades}
+        onChange={handleChange}
+        className="netflix-input"
+      />
       
 
       <button
@@ -336,6 +354,7 @@ function DescripcionArticulos() {
             <th>Título</th>
             <th>Tipo</th>
             <th>Idioma</th>
+            <th>Unidades</th>
             <th>Estado</th>
             <th>Acciones</th>
           </tr>
@@ -380,6 +399,10 @@ function DescripcionArticulos() {
 
                 <td>
                   {r.idioma}
+                </td>
+
+                <td>
+                  {r.unidades}
                 </td>
 
                 <td>

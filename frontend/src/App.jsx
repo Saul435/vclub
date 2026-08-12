@@ -22,6 +22,7 @@ import Elencos from "@/pages/Elenco";
 import Clientes from "@/pages/Clientes";
 import Empleados from "@/pages/Empleados";
 import DescripcionArticulos from "@/pages/DescripcionArticulos";
+import Reservas from "@/pages/Reservas";
 
 
 function App() {
@@ -108,6 +109,11 @@ function App() {
           <Route
             path="/descripciones-articulo"
             element={<DescripcionArticulos />}
+          />
+
+          <Route
+            path="/reservas"
+            element={<Reservas />}
           />
 
           {/* ADMINISTRACIÓN */}
